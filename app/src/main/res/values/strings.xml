@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Automatic Wallpaper</string>
+
+    <integer-array name="wallpapers">
+        <item>@drawable/motivation0</item>
+        <item>@drawable/motivation1</item>
+        <item>@drawable/motivation2</item>
+        <item>@drawable/motivation3</item>
+        <item>@drawable/motivation4</item>
+        <item>@drawable/motivation5</item>
+        <item>@drawable/motivation6</item>
+    </integer-array>
+
+    <string-array name="interval_time">
+        <item>1 Hour</item>
+        <item>6 Hour</item>
+        <item>8 Hour</item>
+        <item>12 Hour</item>
+        <item>24 Hour</item>
+    </string-array>
+
+</resources>
