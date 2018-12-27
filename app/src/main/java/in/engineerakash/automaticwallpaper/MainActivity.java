@@ -3,6 +3,7 @@ package in.engineerakash.automaticwallpaper;
 import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -27,9 +28,17 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import androidx.work.Constraints;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "akt";
 
     private RecyclerView wallpaperRv;
     private Spinner intervalSpinner;
@@ -70,25 +79,29 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "setWallpaper: " + selectedInterval);
 
+        SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
         switch (selectedInterval) {
             case "1 Hour":
-
+                editor.putInt("interval_second", 10);
                 break;
             case "6 Hour":
-
+                editor.putInt("interval_second", 10);
                 break;
             case "8 Hour":
-
+                editor.putInt("interval_second", 10);
                 break;
             case "12 Hour":
-
+                editor.putInt("interval_second", 10);
                 break;
             case "24 Hour":
-
+                editor.putInt("interval_second", 10);
                 break;
             default:
                 return false;
         }
+        editor.apply();
 
         Drawable drawable = getResources().obtainTypedArray(R.array.wallpapers).getDrawable(0);
         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
@@ -98,6 +111,20 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             manager.setBitmap(bitmap);
+
+
+            // Create a Constraints object that defines when the task should run
+            Constraints myConstraints = new Constraints.Builder()
+                    .setRequiresBatteryNotLow(true)
+                    .build();
+
+            PeriodicWorkRequest compressionWork =
+                    new PeriodicWorkRequest.Builder(WallpaperWorker.class, 16, TimeUnit.MINUTES)
+                            .setConstraints(myConstraints)
+                            .build();
+            WorkManager.getInstance().enqueue(compressionWork);
+
+
             return true;
         } catch (IOException e) {
             e.printStackTrace();
