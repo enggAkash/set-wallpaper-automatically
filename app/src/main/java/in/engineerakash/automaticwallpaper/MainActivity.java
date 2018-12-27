@@ -2,7 +2,6 @@ package in.engineerakash.automaticwallpaper;
 
 import android.Manifest;
 import android.app.WallpaperManager;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
@@ -16,26 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import androidx.work.Constraints;
-import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
-import androidx.work.Worker;
-import androidx.work.WorkerParameters;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "akt";
@@ -43,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView wallpaperRv;
     private Spinner intervalSpinner;
     private Button setWallpaperBtn;
+
+    private ArrayList<Wallpaper> wallpapers;
+    /*https://medium.com/@ipaulpro/drag-and-swipe-with-recyclerview-b9456d2b1aaf*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,56 +152,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    class WallpaperAdapter extends RecyclerView.Adapter<WallpaperViewHolder> {
-
-        TypedArray wallpaperArr;
-        Context context;
-        RequestOptions glideOptions;
-
-        public WallpaperAdapter(Context context, TypedArray wallpaperArr) {
-            this.context = context;
-            this.wallpaperArr = wallpaperArr;
-
-            glideOptions = new RequestOptions()
-                    .placeholder(R.drawable.wallpaper_placeholder)
-                    .error(R.drawable.wallpaper_broken);
-        }
-
-        @NonNull
-        @Override
-        public WallpaperViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.wallpaper_layout, viewGroup, false);
-            return new WallpaperViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull WallpaperViewHolder wallpaperViewHolder, int i) {
-
-            Drawable resource = wallpaperArr.getDrawable(i);
-
-            Glide.with(context)
-                    .setDefaultRequestOptions(glideOptions)
-                    .load(resource)
-                    .into(wallpaperViewHolder.imageView);
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return wallpaperArr.length();
-        }
-    }
-
-    class WallpaperViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
-
-        public WallpaperViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.wallpaper_iv);
         }
     }
 
