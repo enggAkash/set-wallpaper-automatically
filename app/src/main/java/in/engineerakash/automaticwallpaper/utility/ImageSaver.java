@@ -1,4 +1,4 @@
-package in.engineerakash.automaticwallpaper;
+package in.engineerakash.automaticwallpaper.utility;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -43,7 +43,9 @@ public class ImageSaver {
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(createFile());
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+
+            Log.d(TAG, "save: file saved successfully ");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

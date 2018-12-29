@@ -1,8 +1,10 @@
-package in.engineerakash.automaticwallpaper;
+package in.engineerakash.automaticwallpaper.utility;
 
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+
+import in.engineerakash.automaticwallpaper.adapter.WallpaperAdapter;
 
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 

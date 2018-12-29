@@ -1,4 +1,4 @@
-package in.engineerakash.automaticwallpaper;
+package in.engineerakash.automaticwallpaper.interfaces;
 
 public interface ItemTouchHelperAdapter {
 

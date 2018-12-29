@@ -1,4 +1,4 @@
-package in.engineerakash.automaticwallpaper;
+package in.engineerakash.automaticwallpaper.utility;
 
 import android.Manifest;
 import android.app.WallpaperManager;
@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+import in.engineerakash.automaticwallpaper.R;
 
 public class WallpaperWorker extends Worker {
     private static final String TAG = "akt";

@@ -1,4 +1,4 @@
-package in.engineerakash.automaticwallpaper;
+package in.engineerakash.automaticwallpaper.activity;
 
 import android.Manifest;
 import android.app.WallpaperManager;
@@ -22,11 +22,19 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import androidx.work.Constraints;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
+import in.engineerakash.automaticwallpaper.R;
+import in.engineerakash.automaticwallpaper.model.Wallpaper;
+import in.engineerakash.automaticwallpaper.adapter.WallpaperAdapter;
+import in.engineerakash.automaticwallpaper.utility.Constant;
+import in.engineerakash.automaticwallpaper.utility.Helper;
+import in.engineerakash.automaticwallpaper.utility.WallpaperWorker;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "akt";
@@ -43,6 +51,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initialiseViews();
+
+
+        if (Helper.isFirstTime(this)){
+            Log.d(TAG, "onCreate: First Time App Opening");
+            Helper.putDrawableToInternalFileStorage(this);
+        } else {
+            Log.d(TAG, "onCreate: Not First Time App Opening");
+        }
+
+    }
+
+
+    private void initialiseViews() {
         wallpaperRv = findViewById(R.id.wallpaper_rv);
         intervalSpinner = findViewById(R.id.interval_time_spinner);
         setWallpaperBtn = findViewById(R.id.set_wallpaper_btn);
@@ -154,5 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+
 
 }
